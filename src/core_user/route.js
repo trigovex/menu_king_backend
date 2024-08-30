@@ -12,4 +12,11 @@ router.delete('/core-users/:id', (req, res) => coreUserHandler.deleteCoreUser(re
 router.get('/core-users/:id', (req, res) => coreUserHandler.getCoreUser(req, res));
 router.get('/core-users', (req, res) => coreUserHandler.listCoreUser(req, res));
 
+
+// New routes for login, signup, and verify OTP
+router.post('/auth/signup', (req, res) => coreUserHandler.signup(req, res));
+router.post('/auth/login', (req, res) => coreUserHandler.login(req, res));
+router.post('/auth/verify-otp', (req, res) => coreUserHandler.verifyOtp(req, res));
+
+
 export default router;

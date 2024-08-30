@@ -68,6 +68,38 @@ class CoreUserHandler {
             res.status(500).json({ error: err.message });
         }
     }
+
+        async signup(req, res) {
+        try {
+            const data = req.body;
+            const result = await this.coreUserService.signup(data);
+            res.status(201).json(result);
+        } catch (err) {
+            res.status(500).json({ error: err.message });
+        }
+    }
+
+    // Login method
+    async login(req, res) {
+        try {
+            const { email, password } = req.body;
+            const result = await this.coreUserService.login(email, password);
+            res.status(200).json(result);
+        } catch (err) {
+            res.status(401).json({ error: err.message });
+        }
+    }
+
+    // Verify OTP method
+    async verifyOtp(req, res) {
+        try {
+            const { email, otp } = req.body;
+            const result = await this.coreUserService.verifyOtp(email, otp);
+            res.status(200).json(result);
+        } catch (err) {
+            res.status(400).json({ error: err.message });
+        }
+    }
 }
 
 export default CoreUserHandler;

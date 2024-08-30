@@ -71,6 +71,51 @@ class CoreUserService {
             throw err;
         }
     }
+
+       async signup(data) {
+        try {
+            // Logic to create a new user
+            let resp = await CreateCoreUser(data);
+            return resp;
+        } catch (err) {
+            console.log("Error ====>>>", err);
+            throw err;
+        }
+    }
+
+    async login(email, password) {
+        try {
+            // Logic to authenticate user
+            let user = await GetCoreUser({ email });
+
+            if (!user || user.password !== password) {
+                throw new Error("Invalid email or password");
+            }
+
+            // Generate token or any other login logic
+            return { message: "Login successful", user };
+        } catch (err) {
+            console.log("Error ====>>>", err);
+            throw err;
+        }
+    }
+
+    async verifyOtp(email, otp) {
+        try {
+            // Logic to verify OTP
+            let user = await GetCoreUser({ email });
+
+            if (!user || user.otp !== otp) {
+                throw new Error("Invalid OTP");
+            }
+
+            // OTP verified successfully
+            return { message: "OTP verified successfully", user };
+        } catch (err) {
+            console.log("Error ====>>>", err);
+            throw err;
+        }
+    }
 }
 
 export default CoreUserService;
