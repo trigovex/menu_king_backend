@@ -118,7 +118,7 @@ class CoreUserService {
             let user = await GetCoreUser({ email });
 
             if (!user || user.otp !== otp) {
-                throw new Error("Invalid OTP");
+               return {message:"Invalid OTP",status:false}
             }
 
             // OTP verified successfully
