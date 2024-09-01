@@ -1,5 +1,6 @@
-//@ts-check
+// @ts-nocheck
 import CoreUserService from './service.js';
+import jwt  from 'jsonwebtoken';
 
 class CoreUserHandler {
     constructor() {
@@ -84,7 +85,7 @@ class CoreUserHandler {
         try {
             const { email, password } = req.body;
             const result = await this.coreUserService.login(email, password);
-            res.status(200).json(result);
+             res.status(200).json(result);
         } catch (err) {
             res.status(401).json({ error: err.message });
         }
@@ -95,7 +96,24 @@ class CoreUserHandler {
         try {
             const { email, otp } = req.body;
             const result = await this.coreUserService.verifyOtp(email, otp);
-            res.status(200).json(result);
+             let token="";
+            let message =""
+            let status=true
+            if(result?.status){
+                  // Generate JWT token
+             token = jwt.sign(result, // Payload
+                    process.env.JWTKEY_SECRET_TOKEN, // Secret key
+                    { expiresIn: '1h' } // Token expiration time
+                );
+                message="token generated successfully"
+                status=true
+ 
+            }else{
+                 message="token failed to generate"
+                status=false
+            }
+
+            res.status(200).json({status:status,message:message,token:token,user:result});
         } catch (err) {
             res.status(400).json({ error: err.message });
         }

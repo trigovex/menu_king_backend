@@ -8,6 +8,7 @@ const coreUserSchema = new mongoose.Schema({
     password: { type: String, required: true },
     extra_details:{type:Object},
     status: { type: String },
+    otp:{type:String},
     user_type: { type: String, required: true,default:"RESTAURANT" },
     is_active: { type: Boolean, default: true },
     createdAt: { type: Date, default: Date.now },

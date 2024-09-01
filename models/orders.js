@@ -4,7 +4,9 @@ import mongoose from 'mongoose';
 const orderItemSchema = new mongoose.Schema({
     item_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Menu.items', required: true },
     quantity: { type: Number, required: true },
-    price: { type: Number, required: true }
+    price: { type: Number, required: true },
+    variant:{type:Object},
+    addons:{type:Object},
 }, { _id: false });
 
 const orderSchema = new mongoose.Schema({

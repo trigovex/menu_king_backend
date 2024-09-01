@@ -1,4 +1,5 @@
 //@ts-check
+import { generateOTP } from "../../helpers/generate_otp.js";
 import {
     CreateCoreUser,
     UpsertCoreUser,
@@ -74,9 +75,15 @@ class CoreUserService {
 
        async signup(data) {
         try {
+               // Logic to authenticate user
+            let user = await GetCoreUser({ email:data?.email });
+
+            if (user) {
+                return {message:"Please check user already exist",status:false}
+            }
             // Logic to create a new user
             let resp = await CreateCoreUser(data);
-            return resp;
+            return {message:"user created successfully",status:true,user:resp};
         } catch (err) {
             console.log("Error ====>>>", err);
             throw err;
@@ -89,11 +96,16 @@ class CoreUserService {
             let user = await GetCoreUser({ email });
 
             if (!user || user.password !== password) {
-                throw new Error("Invalid email or password");
+                return {message:"Invalid email or password",status:false}
+            }
+
+            if(user){
+                let otp = await generateOTP()
+                await UpdateCoreUser({email:email},{otp:otp})
             }
 
             // Generate token or any other login logic
-            return { message: "Login successful", user };
+            return { message: "Login successful", data:user,status:true };
         } catch (err) {
             console.log("Error ====>>>", err);
             throw err;
