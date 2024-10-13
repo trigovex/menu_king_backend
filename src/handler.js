@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { decrypt, encrypt } from '../helpers/encryption_decryption';
+import { decrypt, encrypt } from '../helpers/encryption_decryption.js';
 
 class AxiosHandler {
   async makeRequest(req, res) {
