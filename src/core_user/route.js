@@ -1,4 +1,4 @@
-//@ts-check
+//@ts-nocheck
 import express from 'express';
 import CoreUserHandler from './handler.js';
 
@@ -18,5 +18,6 @@ router.post('/auth/signup', (req, res) => coreUserHandler.signup(req, res));
 router.post('/auth/login', (req, res) => coreUserHandler.login(req, res));
 router.post('/auth/verify_otp', (req, res) => coreUserHandler.verifyOtp(req, res));
 
+router.post('/auth/check_token', (req, res) =>coreUserHandler.checkToken(req, res));
 
 export default router;

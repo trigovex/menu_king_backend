@@ -118,6 +118,18 @@ class CoreUserHandler {
             res.status(400).json({ error: err.message });
         }
     }
+
+     async checkToken(req, res) {
+        try {
+            const data = req.body;
+            const result = await this.coreUserService.create(data);
+            res.status(201).json(result);
+        } catch (err) {
+            res.status(500).json({ error: err.message });
+        }
+    }
+
+
 }
 
 export default CoreUserHandler;
