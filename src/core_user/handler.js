@@ -51,7 +51,7 @@ class CoreUserHandler {
 
     async getCoreUser(req, res) {
         try {
-            const query = { _id: req.params.id };
+            const query = { id: req.params.id };
             const result = await this.coreUserService.get(query);
             res.status(200).json(result);
         } catch (err) {
@@ -94,7 +94,7 @@ class CoreUserHandler {
     // Verify OTP method
     async verifyOtp(req, res) {
         try {
-            const { email, otp } = req.body;
+            const { email, otp,id } = req.body;
             const result = await this.coreUserService.verifyOtp(email, otp);
              let token="";
             let message =""
@@ -109,7 +109,7 @@ class CoreUserHandler {
                 status=true
  
             }else{
-                 message="token failed to generate"
+                 message="Invalid OTP/token failed to generate"
                 status=false
             }
 
@@ -122,7 +122,8 @@ class CoreUserHandler {
      async checkToken(req, res) {
         try {
             const data = req.body;
-            const result = await this.coreUserService.create(data);
+            const decoded = jwt.decode(data?.token);
+            const result = await this.coreUserService.get({id:decoded?.id});
             res.status(201).json(result);
         } catch (err) {
             res.status(500).json({ error: err.message });

@@ -128,7 +128,7 @@ class CoreUserService {
             }
 
             // OTP verified successfully
-            return { message: "OTP verified successfully", user };
+            return { message: "OTP verified successfully", user,status:true };
         } catch (err) {
             console.log("Error ====>>>", err);
             throw err;
