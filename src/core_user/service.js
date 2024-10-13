@@ -95,7 +95,13 @@ class CoreUserService {
             // Logic to authenticate user
             let user = await GetCoreUser({ email });
 
-            if (!user || user.password !== password) {
+
+
+            if(!user){
+                    return {message:"User Not Found",status:false}
+            }
+
+            if (user?.password !== password) {
                 return {message:"Invalid email or password",status:false}
             }
 
@@ -105,7 +111,7 @@ class CoreUserService {
             }
 
             // Generate token or any other login logic
-            return { message: "Login successful", data:user,status:true };
+            return { message: "OTP sent successful", data:{user_id:user?.id},status:true };
         } catch (err) {
             console.log("Error ====>>>", err);
             throw err;
